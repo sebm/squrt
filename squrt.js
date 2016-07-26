@@ -69,7 +69,7 @@ function init() {
 var sources = [];
 var offsetTimes = [];
 var loop = {};
-var NUM_SLICES = 16;
+var NUM_SLICES = 128;
 
 function createSources(bufferList) {
 	for (var i = 0; i < NUM_SLICES; i++) {
@@ -108,7 +108,7 @@ function play(bufferList) {
 	for (var i in sources) {
 			var source = sources[i];
 			var offsetTime = i * sliceDuration;
-			source.start(now + offsetTime, loop[i], sliceDuration);
+			source.start(0.1 + now + offsetTime, loop[i], sliceDuration);
 	}
 }
 
@@ -117,11 +117,10 @@ function chopAndPlay(bufferList) {
 	var sliceDuration = bufferList[0].duration / NUM_SLICES
 
 	setOffsetTimes(bufferList);
-
 	play(bufferList);
 
 	setInterval(function() {
 		play(bufferList);
-	}, 16 * sliceDuration * 1000);
+	}, NUM_SLICES * sliceDuration * 1000);
 
 }
