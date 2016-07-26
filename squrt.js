@@ -98,26 +98,17 @@ function setOffsetTimes(bufferList) {
 	for (var i in offsetTimes) {
 		loop[i] = offsetTimes[i];
 	}
-
-	loop[0] = CYMBAL_KICK;
-	loop[2] = CYMBAL_KICK;
-	loop[4] = SNARE_1;
-	loop[6] = KICK_1;
-	loop[8] = CYMBAL_KICK;
-	loop[10] = CYMBAL_KICK;
-	loop[12] = SNARE_2;
 }
 
 function play(bufferList) {
 	var sliceDuration = bufferList[0].duration / NUM_SLICES
+	var now = context.currentTime
 
 	createSources(bufferList);
 	for (var i in sources) {
-		setTimeout(function(sources, i) {
 			var source = sources[i];
 			var offsetTime = i * sliceDuration;
-			source.start(0, loop[i], sliceDuration);
-		}.bind(null, sources, i), i * sliceDuration * 1000);
+			source.start(now + offsetTime, loop[i], sliceDuration);
 	}
 }
 
